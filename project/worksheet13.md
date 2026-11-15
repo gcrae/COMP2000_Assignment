@@ -327,6 +327,7 @@ With more time, I would add a third species that closes the ecological loop.
 ## 4. Log Book and Final Reflection
 
 **4.1.** Attach or link your log book entries for Weeks 7–13.
+[Link text](logbook.md)
 
 **4.2.** Reflect on the semester:
 
