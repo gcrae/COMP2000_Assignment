@@ -327,9 +327,11 @@ With more time, I would add a third species that closes the ecological loop.
 ## 4. Log Book and Final Reflection
 
 **4.1.** Attach or link your log book entries for Weeks 7–13.
+
 [Logbook](logbook.md)
 
 **4.2.** Reflect on the semester:
+
 
 - What was the most important concept you learned?
 The most important concept I learned is that a design pattern is a response to a specific problem not a feature to add. My Week 7 code already had State and Observer but auditing it showed they were poorly applied: the State pattern needed a new class for every species and stage and the Observer never removed dead plants. So they stayed registered with the sky. Fixing this taught me to ask what actually varies and what the pattern costs to maintain which led me to replace the per-stage classes with one lambda-driven state and to choose Template Method and Factory Method over Strategy for spreading. Rejecting an alternative for a clear reason taught me more than adding the pattern itself.
