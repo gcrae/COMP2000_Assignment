@@ -25,7 +25,6 @@ public class Patch<T extends Growable> extends JPanel{
     }
 
     public boolean isEmpty() {
-        System.out.println("patch empty? " + collection.isEmpty());
         return collection.isEmpty();
     }
 
@@ -41,7 +40,6 @@ public class Patch<T extends Growable> extends JPanel{
     public void addToPatch(T item) throws OutOfPatchBoundsException {
         if(patchArea.isPointInRadius(item.getPosition())) {
             collection.add(item);
-            System.out.println("Added to patch");
         } else {
             throw new OutOfPatchBoundsException();
         }

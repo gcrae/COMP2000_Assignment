@@ -16,14 +16,16 @@ public class SunnyState implements SkyState {
     public void paintComponent(Graphics g) {
         sky.setBackground(new Color(140,200,255));
         g.setColor(Color.YELLOW);
-        double p = (((double) sky.getHour()) / 12000);
+        double p = (((double) sky.getHour()) / Sky.HALF_DAY);
         g.fillOval((int) (p * (double) Window.WIN_WIDTH) - 50, 0, 50, 50);
     }
 
     @Override
     public void checkChange() {
-        if(sky.getHour() >= 12000) {
+        if(sky.getHour() >= Sky.HALF_DAY) {
             sky.transitionTo(sky.getNightState());
+        } else if(sky.isRaining()) {
+            sky.transitionTo(sky.getRainState());
         }
     }
 

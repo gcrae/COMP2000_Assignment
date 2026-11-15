@@ -1,8 +1,6 @@
 package supplementary;
 import growables.Growable;
 import java.awt.*;
-import java.util.Timer;
-import java.util.TimerTask;
 import javax.swing.*;
 import placed_objects.Ground;
 import placed_objects.Patch;
@@ -17,6 +15,9 @@ public class Window extends JFrame{
 
     public static final int WIN_WIDTH = 1200;
     public static final int WIN_HEIGHT = 900;
+    public static final int SKY_HEIGHT = WIN_HEIGHT / 4;
+    public static final int GROUND_HEIGHT = WIN_HEIGHT - SKY_HEIGHT;
+    private static final int TICK_MS = 20;
     
     private final Sky sky;
     private final Ground ground;
@@ -26,20 +27,16 @@ public class Window extends JFrame{
         sky = new Sky();
         ground = new Ground();
 
-        timer = new Timer();
-        TimerTask tick = new TimerTask() {
-            @Override 
-            public void run() {
-                ground.tick();
-                sky.tick();
-            }
-        };
-        timer.schedule(tick, 20, 20);
+        // javax.swing.Timer fires on the event-dispatch thread, so every Swing/model
+        // mutation made by a tick is single-threaded (java.util.Timer used its own thread).
+        timer = new Timer(TICK_MS, e -> {
+            ground.tick();
+            sky.tick();
+        });
 
         //Basic window props
         this.setTitle("GAASK Plant Simulation COMP2000");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   //Exit appliction when x pressed
-        this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setLayout(new GridBagLayout());    //Main window only contains sky and ground
 
@@ -52,8 +49,15 @@ public class Window extends JFrame{
         this.add(ground,c);
         
         this.pack();
+        this.setLocationRelativeTo(null);   // must follow pack() to centre the real size
 
         this.setVisible(true);
+        timer.start();   // only start once the UI exists
+    }
+
+    /** True if p lies inside the ground area (the only place plants may live). */
+    public static boolean isOnGround(Point p) {
+        return p != null && p.x >= 0 && p.x <= WIN_WIDTH && p.y >= 0 && p.y <= GROUND_HEIGHT;
     }
 
     //Sky will deal with it's own components, so anything added to the window 
@@ -67,7 +71,7 @@ public class Window extends JFrame{
         return ground;
     }
 
-    public void addToGround(Growable g) {
+    public <T extends Component & Growable> void addToGround(T g) {
         ground.addGrowable(g);
     }
 
