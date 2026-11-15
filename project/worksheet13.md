@@ -2,7 +2,7 @@
 
 **Student name:** Grace Bohra
 
-**GitHub repo URL:** (your own fork of your team's repository, not your team's URL)
+**GitHub repo URL:** https://github.com/gcrae/COMP2000_Assignment.git
 
 ---
 
